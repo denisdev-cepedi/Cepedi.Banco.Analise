@@ -1,3 +1,3 @@
-﻿namespace Cepedi.Shareable.Responses;
+﻿// namespace Cepedi.Shareable.Responses;
 
-public record AtualizarUsuarioResponse(string nome);
+// public record AtualizarUsuarioResponse(string nome);

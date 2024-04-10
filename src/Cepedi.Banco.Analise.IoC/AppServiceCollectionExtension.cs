@@ -21,7 +21,7 @@ namespace Cepedi.Banco.Analise.IoC
             cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
             //services.AddMediatR(new[] { typeof(IDomainEntryPoint).Assembly });
 
-            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IPessoaCreditoRepository, PessoaCreditoRepository>();
             //services.AddHttpContextAccessor();
 
             services.AddHealthChecks()

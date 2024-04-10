@@ -45,14 +45,13 @@ public class ApplicationDbContextInitialiser
     public async Task TrySeedAsync()
     {
         // Default roles
-        var usuario = new UsuarioEntity { Nome = "Denis", Celular = "71992414041", CelularValidado = true, 
-            Cpf = "1234567891", DataNascimento = DateTime.Now.AddYears(-31), Email = "denis.vieira@cepedi.org.br" };
+        var usuario = new PessoaCreditoEntity { LimiteCredito = 2000, CartaoCredito = true };
 
         // Default data
         // Seed, if necessary
-        if (!_context.Usuario.Any())
+        if (!_context.PessoaCredito.Any())
         {
-            _context.Usuario.Add(usuario);
+            _context.PessoaCredito.Add(usuario);
 
             await _context.SaveChangesAsync();
         }
