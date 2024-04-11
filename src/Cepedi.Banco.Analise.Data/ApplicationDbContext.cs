@@ -7,7 +7,8 @@ namespace Cepedi.Banco.Analise.Data;
 [ExcludeFromCodeCoverage]
 public class ApplicationDbContext : DbContext
 {
-    public DbSet<UsuarioEntity> Usuario { get; set; } = default!;
+    // public DbSet<UsuarioEntity> Usuario { get; set; } = default!;
+    public DbSet<PessoaCreditoEntity> PessoaCredito { get; set; } = default!;
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
