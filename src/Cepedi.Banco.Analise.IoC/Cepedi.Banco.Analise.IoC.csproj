@@ -18,9 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cepedi.Banco.Analise.Data\Cepedi.Banco.Analise.Data.csproj" />
-    <ProjectReference Include="..\Cepedi.Banco.Analise.Domain\Cepedi.Banco.Analise.Domain.csproj" />
-    <ProjectReference Include="..\Cepedi.Banco.Analise.Shareable\Cepedi.Banco.Analise.Shareable.csproj" />
+    <ProjectReference Include="..\Cepedi.Banco.Analise.Compartilhado\Cepedi.Banco.Analise.Compartilhado.csproj" />
+    <ProjectReference Include="..\Cepedi.Banco.Analise.Dados\Cepedi.Banco.Analise.Dados.csproj" />
+    <ProjectReference Include="..\Cepedi.Banco.Analise.Dominio\Cepedi.Banco.Analise.Dominio.csproj" />
   </ItemGroup>
 
 </Project>
