@@ -8,11 +8,16 @@ public class PessoaCreditoEntityTypeConfiguration : IEntityTypeConfiguration<Pes
     public void Configure(EntityTypeBuilder<PessoaCreditoEntity> builder)
     {
         builder.ToTable("PessoaCredito");
-        builder.HasKey(c => c.PessoaId); // Define a chave primária
+        builder.HasKey(c => c.Id); // Define a chave primária
 
         builder.Property(c => c.CartaoCredito);
         builder.Property(c => c.ChequeEspecial);
         builder.Property(c => c.LimiteCredito);
+        builder.Property(c => c.Score);
 
+        builder.Property(c => c.PessoaId);
+        // builder.HasOne(c => c.Pessoa)
+        //     .WithOne()
+        //     .HasForeignKey<PessoaCreditoEntity>(c => c.PessoaId); falta implementar
     }
 }
