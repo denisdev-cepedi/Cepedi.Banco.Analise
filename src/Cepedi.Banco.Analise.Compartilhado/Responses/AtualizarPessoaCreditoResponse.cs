@@ -1,3 +1,3 @@
 ﻿namespace Cepedi.Banco.Analise.Compartilhado;
 
-public record AtualizarPessoaCreditoResponse (int id,bool CartaoCredito, bool ChequeEspecial, double LimiteCredito);
+public record AtualizarPessoaCreditoResponse (string Cpf,bool CartaoCredito, bool ChequeEspecial, double LimiteCredito);

@@ -22,11 +22,11 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
     public async Task<Result<CriarPessoaCreditoResponse>> Handle(CriarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
 
-        var PessoaEntity = _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.PessoaId); // Consultar repository do banco para obter pessoa (falta implementar)
+        var PessoaEntity = _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Cpf); // Consultar repository do banco para obter pessoa (falta implementar)
 
         var pessoaCredito = new PessoaCreditoEntity
         {
-            PessoaId = request.PessoaId,
+            Cpf = request.Cpf,
             LimiteCredito = request.LimiteCredito,
             CartaoCredito = request.CartaoCredito,
             ChequeEspecial = request.ChequeEspecial,
@@ -38,6 +38,6 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
 
 
 
-        return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Id, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito));
+        return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Cpf, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito));
     }
 }

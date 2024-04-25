@@ -18,7 +18,7 @@ public class AtualizarPessoaCreditoResquestHandler : IRequestHandler<AtualizarPe
     }
     public async Task<Result<AtualizarPessoaCreditoResponse>> Handle(AtualizarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
-        var pessoaEntity = await _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Id);
+        var pessoaEntity = await _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Cpf);
         
         if (pessoaEntity == null)
         {
@@ -29,7 +29,7 @@ public class AtualizarPessoaCreditoResquestHandler : IRequestHandler<AtualizarPe
 
         await _pessoaCreditoRepository.AtualizarPessoaCreditoAsync(pessoaEntity);
 
-        var pessoaCredito = new AtualizarPessoaCreditoResponse(pessoaEntity.Id, pessoaEntity.CartaoCredito, pessoaEntity.ChequeEspecial, pessoaEntity.LimiteCredito);
+        var pessoaCredito = new AtualizarPessoaCreditoResponse(pessoaEntity.Cpf, pessoaEntity.CartaoCredito, pessoaEntity.ChequeEspecial, pessoaEntity.LimiteCredito);
 
         return Result.Success(pessoaCredito);
     }

@@ -29,15 +29,15 @@ public class PessoaCreditoRepository : IPessoaCreditoRepository
     }
 
 
-    public async Task<PessoaCreditoEntity> ObterPessoaCreditoAsync(int id)
+    public async Task<PessoaCreditoEntity> ObterPessoaCreditoAsync(string cpf)
     {
-        return await _context.PessoaCredito.Where(e => e.PessoaId == id).FirstOrDefaultAsync() ??  throw new Exception("Pessoa não encontrada");
+        return await _context.PessoaCredito.Where(e => e.Cpf == cpf).FirstOrDefaultAsync() ??  throw new Exception("Pessoa não encontrada");
     }
 
-    public async Task<PessoaCreditoEntity> DeletarPessoaCreditoAsync(int id)
+    public async Task<PessoaCreditoEntity> DeletarPessoaCreditoAsync(string cpf)
     {
-        var pessoaCredito = await _context.PessoaCredito.Where(e => e.PessoaId == id).FirstOrDefaultAsync();
-        
+        var pessoaCredito = await _context.PessoaCredito.Where(e => e.Cpf == cpf).FirstOrDefaultAsync();
+
         _context.PessoaCredito.Remove(pessoaCredito);
 
         await _context.SaveChangesAsync();

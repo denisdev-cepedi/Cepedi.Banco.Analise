@@ -18,14 +18,14 @@ public class ObterPessoaCreditoRequestHandler : IRequestHandler<ObterPessoaCredi
     }
     public async Task<Result<ObterPessoaCreditoResponse>> Handle(ObterPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
-        var pessoaEntity = await _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Id);
+        var pessoaEntity = await _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Cpf);
         
         if (pessoaEntity == null)
         {
             return Result.Error<ObterPessoaCreditoResponse>(new SemResultadosExcecao());
         }
 
-        var pessoaCredito = new ObterPessoaCreditoResponse(pessoaEntity.Id, pessoaEntity.CartaoCredito, pessoaEntity.ChequeEspecial, pessoaEntity.LimiteCredito);
+        var pessoaCredito = new ObterPessoaCreditoResponse(pessoaEntity.Cpf, pessoaEntity.CartaoCredito, pessoaEntity.ChequeEspecial, pessoaEntity.LimiteCredito);
 
         return Result.Success(pessoaCredito);
     }

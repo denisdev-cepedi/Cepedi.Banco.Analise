@@ -5,5 +5,5 @@ namespace Cepedi.Banco.Analise.Compartilhado;
 
 public class ObterPessoaCreditoRequest : IRequest<Result<ObterPessoaCreditoResponse>>
 {
-    public int Id { get; set; }
+    public string Cpf { get; set; } = default!;
 }

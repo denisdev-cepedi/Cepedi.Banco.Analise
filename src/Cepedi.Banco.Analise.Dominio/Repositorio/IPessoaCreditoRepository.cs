@@ -4,7 +4,7 @@ namespace Cepedi.Banco.Analise.Dominio.Repositorio;
 public interface IPessoaCreditoRepository
 {
     Task<PessoaCreditoEntity> CriarPessoaCreditoAsync(PessoaCreditoEntity pessoaCredito);
-    Task<PessoaCreditoEntity> ObterPessoaCreditoAsync(int id);
+    Task<PessoaCreditoEntity> ObterPessoaCreditoAsync(string cpf);
     Task<PessoaCreditoEntity> AtualizarPessoaCreditoAsync(PessoaCreditoEntity pessoaCredito);
-    Task<PessoaCreditoEntity> DeletarPessoaCreditoAsync(int id);
+    Task<PessoaCreditoEntity> DeletarPessoaCreditoAsync(string cpf);
 }

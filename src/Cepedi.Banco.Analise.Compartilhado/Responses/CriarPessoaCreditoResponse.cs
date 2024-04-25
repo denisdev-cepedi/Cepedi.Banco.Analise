@@ -1,3 +1,3 @@
 namespace Cepedi.Banco.Analise.Compartilhado.Responses;
 
-public record CriarPessoaCreditoResponse( int idPessoaCredito, bool cartaoCredito, bool chequeEspecial, double limiteCredito);
+public record CriarPessoaCreditoResponse( string cpf, bool cartaoCredito, bool chequeEspecial, double limiteCredito);

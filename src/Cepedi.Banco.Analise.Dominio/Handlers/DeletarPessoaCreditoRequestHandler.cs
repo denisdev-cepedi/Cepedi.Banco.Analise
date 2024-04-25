@@ -19,15 +19,15 @@ public class DeletarPessoaCreditoRequestHandler : IRequestHandler<DeletarPessoaC
 
     public async Task<Result<DeletarPessoaCreditoResponse>> Handle(DeletarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
-        var pessoaEntity = await _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Id);
+        var pessoaEntity = await _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Cpf);
 
         if (pessoaEntity == null)
         {
             return Result.Error<DeletarPessoaCreditoResponse>(new SemResultadosExcecao());
         }
 
-        await _pessoaCreditoRepository.DeletarPessoaCreditoAsync(pessoaEntity.Id);
+        await _pessoaCreditoRepository.DeletarPessoaCreditoAsync(pessoaEntity.Cpf);
 
-        return Result.Success(new DeletarPessoaCreditoResponse(pessoaEntity.Id));
+        return Result.Success(new DeletarPessoaCreditoResponse(pessoaEntity.Cpf));
     }
 }
