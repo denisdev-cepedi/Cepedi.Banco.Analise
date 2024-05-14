@@ -1,3 +1,4 @@
+using Cepedi.Banco.Analise.Compartilhado.Dtos;
 using Cepedi.Banco.Analise.Dominio.Entidades;
 using Cepedi.Banco.Analise.Dominio.Repositorio;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,11 @@ public class PessoaCreditoRepository : IPessoaCreditoRepository
         await _context.SaveChangesAsync();
 
         return pessoaCredito;
+    }
+
+    public Task<List<HistoricoTransacaoDto>> ObterHistoricoTransacaoAsync(string cpf)
+    {
+        throw new NotImplementedException();
     }
 }
 
