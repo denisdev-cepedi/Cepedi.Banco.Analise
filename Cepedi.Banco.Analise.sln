@@ -38,6 +38,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cepedi.Banco.Analise.Domini
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cepedi.Banco.Analise.Dados.Tests", "tests\Cepedi.Banco.Analise.Dados.Tests\Cepedi.Banco.Analise.Dados.Tests.csproj", "{5687A7A4-6CC3-4B77-95F7-73F03005E298}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "08 - External API", "08 - External API", "{9312D326-3788-4AF5-9440-06B94F6EA398}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RequisicaoExterna", "08 - External API\RequisicaoExterna\RequisicaoExterna.csproj", "{29770A59-C998-49F8-846A-EFBC882FE2B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +84,10 @@ Global
 		{5687A7A4-6CC3-4B77-95F7-73F03005E298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5687A7A4-6CC3-4B77-95F7-73F03005E298}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5687A7A4-6CC3-4B77-95F7-73F03005E298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29770A59-C998-49F8-846A-EFBC882FE2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29770A59-C998-49F8-846A-EFBC882FE2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29770A59-C998-49F8-846A-EFBC882FE2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29770A59-C998-49F8-846A-EFBC882FE2B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +102,7 @@ Global
 		{770C5CDB-7F75-41A3-887F-E2B2316A2378} = {2D4A6734-55E9-46FD-BC86-1A6B9652198C}
 		{01151704-B034-439F-AEC9-168F4473FB74} = {2D4A6734-55E9-46FD-BC86-1A6B9652198C}
 		{5687A7A4-6CC3-4B77-95F7-73F03005E298} = {2D4A6734-55E9-46FD-BC86-1A6B9652198C}
+		{29770A59-C998-49F8-846A-EFBC882FE2B0} = {9312D326-3788-4AF5-9440-06B94F6EA398}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {18F2618F-D5A0-4779-AB65-8871DF992684}
