@@ -3,6 +3,7 @@ using Cepedi.Banco.Analise.Compartilhado.Requests;
 using Cepedi.Banco.Analise.Compartilhado.Responses;
 using Cepedi.Banco.Analise.Dominio.Entidades;
 using Cepedi.Banco.Analise.Dominio.Repositorio;
+using Cepedi.Banco.Analise.Dominio.Servicos;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using OperationResult;
@@ -12,19 +13,23 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
 {
     public readonly IPessoaCreditoRepository _pessoaCreditoRepository;
     public readonly ILogger<CriarPessoaCretidoRequestHandler> _logger;
+    public readonly IExternalBankHistory _externalBankHistory;
 
-    public CriarPessoaCretidoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<CriarPessoaCretidoRequestHandler> logger)
+    public CriarPessoaCretidoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<CriarPessoaCretidoRequestHandler> logger, IExternalBankHistory externalBankHistory)
     {
         _pessoaCreditoRepository = pessoaCreditoRepository;
         _logger = logger;
+        _externalBankHistory = externalBankHistory;
     }
+
 
 
     public async Task<Result<CriarPessoaCreditoResponse>> Handle(CriarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
 
         var PessoaEntity = _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Cpf); // Consultar repository do banco para obter pessoa (falta implementar)
-        var historicoTransacaoDto = _pessoaCreditoRepository.ObterHistoricoTransacaoAsync(request.Cpf); // Consultar repository do banco para obter historico de transações (falta implementar)
+        var historicoTransacaoDto = _externalBankHistory.GetExternalBankHistoryAsync(); // Consultar repository do banco para obter historico de transações (falta implementar)
+
         var scoreCalc = CalcularScore(historicoTransacaoDto, request.Cpf);
         var pessoaCredito = new PessoaCreditoEntity
         {
@@ -43,13 +48,15 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
         return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Cpf, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito));
     }
 
-    public int CalcularScore(List<HistoricoTransacaoDto> historicoTransacaoDto, string cpf){
+    public int CalcularScore(List<HistoricoTransacaoDto> historicoTransacaoDto, string cpf)
+    {
         decimal balanco = 0;
         if (historicoTransacaoDto.Count == 0)
             return 0;
         else
         {
-            foreach (var item in historicoTransacaoDto){
+            foreach (var item in historicoTransacaoDto)
+            {
                 if (item.CpfDestinario == cpf)
                     balanco += item.ValorTransacao;
 
