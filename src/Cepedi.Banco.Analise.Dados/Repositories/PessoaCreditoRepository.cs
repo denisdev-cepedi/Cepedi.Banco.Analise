@@ -46,9 +46,5 @@ public class PessoaCreditoRepository : IPessoaCreditoRepository
         return pessoaCredito;
     }
 
-    public Task<List<HistoricoTransacaoDto>> ObterHistoricoTransacaoAsync(string cpf)
-    {
-        throw new NotImplementedException();
-    }
 }
 

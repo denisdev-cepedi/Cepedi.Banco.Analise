@@ -8,5 +8,5 @@ public interface IPessoaCreditoRepository
     Task<PessoaCreditoEntity> ObterPessoaCreditoAsync(string cpf);
     Task<PessoaCreditoEntity> AtualizarPessoaCreditoAsync(PessoaCreditoEntity pessoaCredito);
     Task<PessoaCreditoEntity> DeletarPessoaCreditoAsync(string cpf);
-    List<HistoricoTransacaoDto> ObterHistoricoTransacaoAsync(string cpf);
+
 }
