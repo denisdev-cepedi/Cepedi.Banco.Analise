@@ -29,7 +29,7 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
     public async Task<Result<CriarPessoaCreditoResponse>> Handle(CriarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
 
-        var historicoTransacaoDto = _externalBankHistory.GetExternalBankHistoryAsync(request.Cpf); // Consultar repository do banco para obter historico de transações (falta implementar)
+        var historicoTransacaoDto = await _externalBankHistory.GetExternalBankHistoryAsync(request.Cpf); // Consultar repository do banco para obter historico de transações (falta implementar)
         Console.WriteLine(historicoTransacaoDto);
         var scoreCalc = CalcularScore(historicoTransacaoDto, request.Cpf);
         var pessoaCredito = new PessoaCreditoEntity
