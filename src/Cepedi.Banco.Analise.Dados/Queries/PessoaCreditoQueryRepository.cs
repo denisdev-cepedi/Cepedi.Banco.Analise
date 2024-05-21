@@ -11,7 +11,7 @@ public class PessoaCreditoQueryRepository : BaseDapperRepository, IPessoaCredito
     {
     }
 
-    public async Task<List<PessoaCreditoEntity>> ObterPessoasAsync(string Cpf)
+    public async Task<List<PessoaCreditoEntity>> ObterPessoaAsync(string Cpf)
     {
         var parametros = new DynamicParameters();
         parametros.Add("@Cpf", Cpf, System.Data.DbType.String);
@@ -27,7 +27,7 @@ public class PessoaCreditoQueryRepository : BaseDapperRepository, IPessoaCredito
         return (await ExecuteQueryAsync<PessoaCreditoEntity>(query, parametros)).ToList();
     }
 
-    public async Task<PessoaCreditoEntity?> AtualizarPessoaDapperAsync(PessoaCreditoEntity pessoa)
+    public async Task<PessoaCreditoEntity?> AtualizarLimiteCreditoDapperAsync(PessoaCreditoEntity pessoa)
     {
         var parametros = new DynamicParameters();
         parametros.Add("@LimiteCredito", pessoa.LimiteCredito, System.Data.DbType.String);
