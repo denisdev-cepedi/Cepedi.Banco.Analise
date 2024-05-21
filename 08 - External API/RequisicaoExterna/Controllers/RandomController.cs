@@ -10,14 +10,16 @@ namespace RequisicaoExternas.Controllers
     [ApiController]
     public class RandomController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult HistoricoTransacao()
+        [HttpGet("{cpf}")]
+        public IActionResult HistoricoTransacao(string cpf)
         {
+
+
             var lista = new List<HistoricoTransacaoDto>
             {
                 new HistoricoTransacaoDto
                 {
-                    CpfDestinario = "12345678901",
+                    CpfDestinario = cpf,
                     CpfRemetente = "10987654321",
                     ValorTransacao = 100,
                     DataTransacao = DateTime.Now,
@@ -27,7 +29,7 @@ namespace RequisicaoExternas.Controllers
                 new HistoricoTransacaoDto
                 {
                     CpfDestinario = "12345678901",
-                    CpfRemetente = "10987654321",
+                    CpfRemetente = cpf,
                     ValorTransacao = 100,
                     DataTransacao = DateTime.Now,
                     DescricaoTransacao = "Transferência",
@@ -35,7 +37,7 @@ namespace RequisicaoExternas.Controllers
                 },
                 new HistoricoTransacaoDto
                 {
-                    CpfDestinario = "12345678901",
+                    CpfDestinario = cpf,
                     CpfRemetente = "10987654321",
                     ValorTransacao = 100,
                     DataTransacao = DateTime.Now,

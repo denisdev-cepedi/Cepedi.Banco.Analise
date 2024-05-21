@@ -1,8 +1,16 @@
 using Serilog;
 using Cepedi.Banco.Analise.IoC;
 using Cepedi.Banco.Analise.Api;
+using Cepedi.Banco.Analise.Dominio.Servicos;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
+const string URI = "https://localhost:5039";
+
+builder
+    .Services
+    .AddRefitClient<IExternalBankHistory>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(URI));
 
 // Add services to the container.
 

@@ -24,6 +24,7 @@ namespace Cepedi.Banco.Analise.IoC
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidacaoComportamento<,>));
             ConfigurarFluentValidation(services);
             services.AddScoped<IPessoaCreditoRepository, PessoaCreditoRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();

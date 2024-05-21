@@ -9,12 +9,15 @@ namespace Cepedi.Banco.Analise.Dominio;
 
 public class AtualizarPessoaCreditoResquestHandler : IRequestHandler<AtualizarPessoaCreditoRequest, Result<AtualizarPessoaCreditoResponse>>
 {
-    public readonly IPessoaCreditoRepository _pessoaCreditoRepository;
-    public readonly ILogger<AtualizarPessoaCreditoResquestHandler> _logger;
-    public AtualizarPessoaCreditoResquestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<AtualizarPessoaCreditoResquestHandler> logger)
+    private readonly IPessoaCreditoRepository _pessoaCreditoRepository;
+    private readonly ILogger<AtualizarPessoaCreditoResquestHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public AtualizarPessoaCreditoResquestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<AtualizarPessoaCreditoResquestHandler> logger, IUnitOfWork unitOfWork)
     {
         _pessoaCreditoRepository = pessoaCreditoRepository;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
     public async Task<Result<AtualizarPessoaCreditoResponse>> Handle(AtualizarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
@@ -28,6 +31,8 @@ public class AtualizarPessoaCreditoResquestHandler : IRequestHandler<AtualizarPe
         pessoaEntity.Atualizar(request.CartaoCredito, request.ChequeEspecial, request.LimiteCredito);
 
         await _pessoaCreditoRepository.AtualizarPessoaCreditoAsync(pessoaEntity);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var pessoaCredito = new AtualizarPessoaCreditoResponse(pessoaEntity.Cpf, pessoaEntity.CartaoCredito, pessoaEntity.ChequeEspecial, pessoaEntity.LimiteCredito);
 

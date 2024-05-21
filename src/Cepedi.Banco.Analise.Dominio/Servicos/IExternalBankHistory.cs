@@ -4,8 +4,8 @@ namespace Cepedi.Banco.Analise.Dominio.Servicos;
 
     public interface IExternalBankHistory
     {
-        [Get("/api/random/")]
-        List<HistoricoTransacaoDto> GetExternalBankHistoryAsync();
+        [Get("/api/random/{cpf}")]
+        List<HistoricoTransacaoDto> GetExternalBankHistoryAsync(string cpf);
     }
 
 

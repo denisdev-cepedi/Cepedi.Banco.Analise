@@ -9,12 +9,15 @@ namespace Cepedi.Banco.Analise.Dominio;
 
 public class DeletarPessoaCreditoRequestHandler : IRequestHandler<DeletarPessoaCreditoRequest, Result<DeletarPessoaCreditoResponse>>
 {
-    public readonly IPessoaCreditoRepository _pessoaCreditoRepository;
-    public readonly ILogger<DeletarPessoaCreditoRequestHandler> _logger;
-    public DeletarPessoaCreditoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<DeletarPessoaCreditoRequestHandler> logger)
+    private readonly IPessoaCreditoRepository _pessoaCreditoRepository;
+    private readonly ILogger<DeletarPessoaCreditoRequestHandler> _logger;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public DeletarPessoaCreditoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<DeletarPessoaCreditoRequestHandler> logger, IUnitOfWork unitOfWork)
     {
         _pessoaCreditoRepository = pessoaCreditoRepository;
         _logger = logger;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Result<DeletarPessoaCreditoResponse>> Handle(DeletarPessoaCreditoRequest request, CancellationToken cancellationToken)
@@ -27,6 +30,8 @@ public class DeletarPessoaCreditoRequestHandler : IRequestHandler<DeletarPessoaC
         }
 
         await _pessoaCreditoRepository.DeletarPessoaCreditoAsync(pessoaEntity.Cpf);
+
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success(new DeletarPessoaCreditoResponse(pessoaEntity.Cpf));
     }

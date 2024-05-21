@@ -9,8 +9,8 @@ namespace Cepedi.Banco.Analise.Dominio;
 
 public class ObterPessoaCreditoRequestHandler : IRequestHandler<ObterPessoaCreditoRequest, Result<ObterPessoaCreditoResponse>>
 {
-    public readonly IPessoaCreditoRepository _pessoaCreditoRepository;
-    public readonly ILogger<ObterPessoaCreditoRequestHandler> _logger;
+    private readonly IPessoaCreditoRepository _pessoaCreditoRepository;
+    private readonly ILogger<ObterPessoaCreditoRequestHandler> _logger;
     public ObterPessoaCreditoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<ObterPessoaCreditoRequestHandler> logger)
     {
         _pessoaCreditoRepository = pessoaCreditoRepository;

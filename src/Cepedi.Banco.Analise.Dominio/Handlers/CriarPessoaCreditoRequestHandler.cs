@@ -14,12 +14,14 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
     public readonly IPessoaCreditoRepository _pessoaCreditoRepository;
     public readonly ILogger<CriarPessoaCretidoRequestHandler> _logger;
     public readonly IExternalBankHistory _externalBankHistory;
+    public readonly IUnitOfWork _unitOfWork;
 
-    public CriarPessoaCretidoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<CriarPessoaCretidoRequestHandler> logger, IExternalBankHistory externalBankHistory)
+    public CriarPessoaCretidoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<CriarPessoaCretidoRequestHandler> logger, IExternalBankHistory externalBankHistory, IUnitOfWork unitOfWork)
     {
         _pessoaCreditoRepository = pessoaCreditoRepository;
         _logger = logger;
         _externalBankHistory = externalBankHistory;
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -27,9 +29,8 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
     public async Task<Result<CriarPessoaCreditoResponse>> Handle(CriarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
 
-        var PessoaEntity = _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Cpf); // Consultar repository do banco para obter pessoa (falta implementar)
-        var historicoTransacaoDto = _externalBankHistory.GetExternalBankHistoryAsync(); // Consultar repository do banco para obter historico de transações (falta implementar)
-
+        var historicoTransacaoDto = _externalBankHistory.GetExternalBankHistoryAsync(request.Cpf); // Consultar repository do banco para obter historico de transações (falta implementar)
+        Console.WriteLine(historicoTransacaoDto);
         var scoreCalc = CalcularScore(historicoTransacaoDto, request.Cpf);
         var pessoaCredito = new PessoaCreditoEntity
         {
@@ -38,11 +39,11 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
             CartaoCredito = request.CartaoCredito,
             ChequeEspecial = request.ChequeEspecial,
             Score = scoreCalc
-
         };
 
         await _pessoaCreditoRepository.CriarPessoaCreditoAsync(pessoaCredito);
 
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 
         return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Cpf, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito));

@@ -28,17 +28,24 @@ public class BaseController : ControllerBase
             var (_, res, error) => HandleError(error!)
         };
 
-    protected ActionResult HandleError(Exception error) => error switch
+    protected ActionResult HandleError(Exception error)
     {
-        SemResultadosExcecao e => NoContent(),
-        _ => BadRequest(FormatErrorMessage(AnaliseMensagemErro.Generico))
-    };
+        if (error is ExcecaoAplicacao excecao)
+        {
+            return BadRequest(FormatErrorMessage(excecao.ResponseErro));
+        }
+        else
+        {
+            // Se a exceção não for do tipo ExcecaoAplicacao, retorna um erro genérico
+            return BadRequest(FormatErrorMessage(AnaliseMensagemErro.Generico));
+        }
+    }
 
     private ResultadoErro FormatErrorMessage(ResultadoErro responseErro, IEnumerable<string>? errors = null)
     {
-        if (errors == null)
+        if (errors != null)
         {
-            responseErro.Descricao = $"{responseErro.Descricao} : {string.Join("; ", errors!)}";
+            responseErro.Descricao = $"{responseErro.Descricao}: {string.Join("; ", errors!)}";
         }
 
         return responseErro;
