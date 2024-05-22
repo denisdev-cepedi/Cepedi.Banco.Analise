@@ -34,13 +34,13 @@ public class PessoaCreditoController : BaseController
     public async Task<ActionResult<AtualizarPessoaCreditoResponse>> AtualizarPagamentoAsync(
         [FromBody] AtualizarPessoaCreditoRequest request) => await SendCommand(request);
 
-    [HttpGet("{id}")]
+    [HttpGet("{Cpf}")]
     [ProducesResponseType(typeof(ObterPessoaCreditoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResultadoErro), StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<ObterPessoaCreditoResponse>> ObterPagamentoAsync(
+    public async Task<ActionResult<ObterPessoaCreditoResponse>> ObterPessoaCreditoRequestAsync(
         [FromRoute] ObterPessoaCreditoRequest request) => await SendCommand(request);
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{Cpf}")]
     [ProducesResponseType(typeof(DeletarPessoaCreditoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResultadoErro), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ResultadoErro), StatusCodes.Status204NoContent)]

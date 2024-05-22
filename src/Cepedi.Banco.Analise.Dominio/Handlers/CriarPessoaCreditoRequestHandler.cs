@@ -46,7 +46,7 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
 
-        return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Cpf, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito));
+        return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Cpf, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito, pessoaCredito.Score));
     }
 
     public int CalcularScore(List<HistoricoTransacaoDto> historicoTransacaoDto, string cpf)
