@@ -1,7 +1,8 @@
-using Cepedi.Banco.Analise.IoC;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.Elasticsearch;
+using Cepedi.Banco.Analise.IoC;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +17,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureAppDependencies(builder.Configuration);
 
+//builder.Host.UseSerilog((context, configuration) =>
+//{
+//    configuration.ReadFrom.Configuration(context.Configuration);
+//});
 builder.Host.UseSerilog((context, configuration) =>
 {
+
     configuration.ReadFrom.Configuration(context.Configuration)
     .WriteTo.Console()
     .WriteTo.Debug()
@@ -45,6 +51,15 @@ if (app.Environment.IsDevelopment())
     // await app.InitialiseDatabaseAsync();
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+static ElasticsearchSinkOptions ConfigureElasticSink(IConfiguration configuration, string environment)
+{
+    return new ElasticsearchSinkOptions(new Uri(configuration["ElasticConfiguration:Uri"]))
+    {
+        AutoRegisterTemplate = true,
+        IndexFormat = $"BancoAnalise{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
+    };
 }
 
 app.UseHealthChecks("/health");
