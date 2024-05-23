@@ -1,4 +1,5 @@
 using Cepedi.Banco.Analise.Compartilhado.Dtos;
+using Cepedi.Banco.Analise.Compartilhado.Enums;
 using Cepedi.Banco.Analise.Compartilhado.Requests;
 using Cepedi.Banco.Analise.Compartilhado.Responses;
 using Cepedi.Banco.Analise.Dominio.Entidades;
@@ -29,8 +30,13 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
     public async Task<Result<CriarPessoaCreditoResponse>> Handle(CriarPessoaCreditoRequest request, CancellationToken cancellationToken)
     {
 
-        var historicoTransacaoDto = await _externalBankHistory.GetExternalBankHistoryAsync(request.Cpf); // Consultar repository do banco para obter historico de transações (falta implementar)
-        Console.WriteLine(historicoTransacaoDto);
+        var historicoTransacaoDto = await _externalBankHistory.GetExternalBankHistoryAsync(request.Cpf); // Consultar repository do banco para obter historico de transações
+        if (historicoTransacaoDto == null)
+        {
+            _logger.LogError("Erro ao buscar historico de transações");
+            return Result.Error<CriarPessoaCreditoResponse>(new Compartilhado.Excecoes.ExcecaoAplicacao(PessoaCreditoErros.BuscaHistoricoNaoEncontrado));
+        }
+
         var scoreCalc = CalcularScore(historicoTransacaoDto, request.Cpf);
         var pessoaCredito = new PessoaCreditoEntity
         {
@@ -40,10 +46,16 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
             ChequeEspecial = request.ChequeEspecial,
             Score = scoreCalc
         };
+        var response = await _pessoaCreditoRepository.CriarPessoaCreditoAsync(pessoaCredito);
 
-        await _pessoaCreditoRepository.CriarPessoaCreditoAsync(pessoaCredito);
+        if (response == null)
+        {
+            _logger.LogError("Erro ao criar pessoa credito");
+            return Result.Error<CriarPessoaCreditoResponse>(new Compartilhado.Excecoes.ExcecaoAplicacao(PessoaCreditoErros.ErroGravacaoPessoaCredito));
+        }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
         _logger.LogInformation("Usuario criado com sucesso");
 
         return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Cpf, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito, pessoaCredito.Score));

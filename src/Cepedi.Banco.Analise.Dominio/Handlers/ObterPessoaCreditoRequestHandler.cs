@@ -1,4 +1,5 @@
 ﻿using Cepedi.Banco.Analise.Compartilhado;
+using Cepedi.Banco.Analise.Compartilhado.Enums;
 using Cepedi.Banco.Analise.Compartilhado.Excecoes;
 using Cepedi.Banco.Analise.Dominio.Entidades;
 using Cepedi.Banco.Analise.Dominio.Repositorio;
@@ -25,15 +26,17 @@ public class ObterPessoaCreditoRequestHandler : IRequestHandler<ObterPessoaCredi
         if (pessoaEntity != null)
         {
             
-            var pessoaCredito = new ObterPessoaCreditoResponse(pessoaEntity.Cpf, pessoaEntity.CartaoCredito, pessoaEntity.ChequeEspecial, pessoaEntity.LimiteCredito);
+            var pessoaCredito = new ObterPessoaCreditoResponse(pessoaEntity.Cpf, pessoaEntity.CartaoCredito, pessoaEntity.ChequeEspecial, pessoaEntity.LimiteCredito, pessoaEntity.Score);
             return Result.Success(pessoaCredito);
         }
         else
         {
             var pessoaEntityRepository = await _pessoaCreditoRepository.ObterPessoaCreditoAsync(request.Cpf);
+
             if (pessoaEntityRepository == null)
             {
-                return Result.Error<ObterPessoaCreditoResponse>(new SemResultadosExcecao());
+                _logger.LogError("Erro ao buscar pessoa credito");
+                return Result.Error<ObterPessoaCreditoResponse>(new Compartilhado.Excecoes.ExcecaoAplicacao(PessoaCreditoErros.SemResultados));
             }
             await _cache.SalvarAsync(request.Cpf, pessoaEntityRepository);
             var pessoaCredito = new ObterPessoaCreditoResponse(pessoaEntityRepository.Cpf, pessoaEntityRepository.CartaoCredito, pessoaEntityRepository.ChequeEspecial, pessoaEntityRepository.LimiteCredito, pessoaEntityRepository.Score);
