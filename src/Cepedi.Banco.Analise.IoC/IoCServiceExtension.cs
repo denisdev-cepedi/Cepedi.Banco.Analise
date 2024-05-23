@@ -6,9 +6,15 @@ using Cepedi.Banco.Analise.Dominio.Pipelines;
 using Cepedi.Banco.Analise.Dominio.Repositorio;
 using FluentValidation;
 using MediatR;
+using Refit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Cepedi.Banco.Analise.Dominio.Servicos;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
+using Cepedi.Banco.Analise.Dominio;
+using Cepedi.Serasa.Pagamento.Dados.Repositorios.Queries;
 
 namespace Cepedi.Banco.Analise.IoC
 {
@@ -24,11 +30,34 @@ namespace Cepedi.Banco.Analise.IoC
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidacaoComportamento<,>));
             ConfigurarFluentValidation(services);
             services.AddScoped<IPessoaCreditoRepository, PessoaCreditoRepository>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPessoaCreditoRepository, PessoaCreditoRepository>();
+
+            //Redis configuration
+             services.AddStackExchangeRedisCache(obj =>
+            {
+                obj.Configuration = configuration["Redis:Connection"];
+                obj.InstanceName = configuration["Redis:Instance"];
+            });
+
+            services.AddSingleton<IDistributedCache, RedisCache>();
+            services.AddScoped(typeof(ICache<>), typeof(Cache<>));
+            
 
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
+            ConfigurarRefit(services, configuration);
         }
-
+        private static void ConfigurarRefit(IServiceCollection services, IConfiguration configuration)
+        {
+            
+            services.
+                AddRefitClient<IExternalBankHistory>().
+                ConfigureHttpClient(httpClient =>
+                    httpClient.BaseAddress =
+                    new Uri("http://localhost:5039")
+                );
+        }
         private static void ConfigurarFluentValidation(IServiceCollection services)
         {
             var abstractValidator = typeof(AbstractValidator<>);

@@ -1,3 +1,4 @@
+using Cepedi.Banco.Analise.Compartilhado.Dtos;
 using Cepedi.Banco.Analise.Dominio.Entidades;
 using Cepedi.Banco.Analise.Dominio.Repositorio;
 using Microsoft.EntityFrameworkCore;
@@ -15,15 +16,11 @@ public class PessoaCreditoRepository : IPessoaCreditoRepository
     {
         _context.PessoaCredito.Add(pessoaCredito);
 
-        await _context.SaveChangesAsync();
-
         return pessoaCredito;
     }
     public async Task<PessoaCreditoEntity> AtualizarPessoaCreditoAsync(PessoaCreditoEntity pessoaCredito)
     {
         _context.PessoaCredito.Update(pessoaCredito);
-
-        await _context.SaveChangesAsync();
 
         return pessoaCredito;
     }
@@ -40,9 +37,8 @@ public class PessoaCreditoRepository : IPessoaCreditoRepository
 
         _context.PessoaCredito.Remove(pessoaCredito);
 
-        await _context.SaveChangesAsync();
-
         return pessoaCredito;
     }
+
 }
 
