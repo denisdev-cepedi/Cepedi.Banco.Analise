@@ -36,8 +36,8 @@ namespace Cepedi.Banco.Analise.IoC
             //Redis configuration
              services.AddStackExchangeRedisCache(obj =>
             {
-                obj.Configuration = configuration["Redis::Connection"];
-                obj.InstanceName = configuration["Redis::Instance"];
+                obj.Configuration = configuration["Redis:Connection"];
+                obj.InstanceName = configuration["Redis:Instance"];
             });
 
             services.AddSingleton<IDistributedCache, RedisCache>();
