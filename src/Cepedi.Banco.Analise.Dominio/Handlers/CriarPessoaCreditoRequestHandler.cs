@@ -44,7 +44,7 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
         await _pessoaCreditoRepository.CriarPessoaCreditoAsync(pessoaCredito);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-
+        _logger.LogInformation("Usuario criado com sucesso");
 
         return Result.Success(new CriarPessoaCreditoResponse(pessoaCredito.Cpf, pessoaCredito.CartaoCredito, pessoaCredito.ChequeEspecial, pessoaCredito.LimiteCredito, pessoaCredito.Score));
     }
