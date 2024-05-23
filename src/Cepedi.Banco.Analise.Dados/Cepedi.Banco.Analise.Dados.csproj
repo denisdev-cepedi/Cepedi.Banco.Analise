@@ -18,6 +18,12 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.17" />
   </ItemGroup>
 
+    <ItemGroup>
+    <Compile Remove="Repositories\Queries\**" />
+    <EmbeddedResource Remove="Repositories\Queries\**" />
+    <None Remove="Repositories\Queries\**" />
+    </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Repositories\Queries\" />
   </ItemGroup>
