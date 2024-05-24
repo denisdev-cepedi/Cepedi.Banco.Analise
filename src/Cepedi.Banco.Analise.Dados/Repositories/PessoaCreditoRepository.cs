@@ -28,7 +28,7 @@ public class PessoaCreditoRepository : IPessoaCreditoRepository
 
     public async Task<PessoaCreditoEntity> ObterPessoaCreditoAsync(string cpf)
     {
-        return await _context.PessoaCredito.Where(e => e.Cpf == cpf).FirstOrDefaultAsync() ??  throw new Exception("Pessoa não encontrada");
+        return await _context.PessoaCredito.Where(e => e.Cpf == cpf).FirstOrDefaultAsync();
     }
 
     public async Task<PessoaCreditoEntity> DeletarPessoaCreditoAsync(string cpf)

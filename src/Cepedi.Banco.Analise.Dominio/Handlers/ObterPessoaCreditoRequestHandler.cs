@@ -1,6 +1,5 @@
 ﻿using Cepedi.Banco.Analise.Compartilhado;
 using Cepedi.Banco.Analise.Compartilhado.Enums;
-using Cepedi.Banco.Analise.Compartilhado.Excecoes;
 using Cepedi.Banco.Analise.Dominio.Entidades;
 using Cepedi.Banco.Analise.Dominio.Repositorio;
 using MediatR;

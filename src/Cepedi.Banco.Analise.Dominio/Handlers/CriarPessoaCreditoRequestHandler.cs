@@ -10,14 +10,14 @@ using Microsoft.Extensions.Logging;
 using OperationResult;
 
 namespace Cepedi.Banco.Analise.Dominio.Handlers;
-public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCreditoRequest, Result<CriarPessoaCreditoResponse>>
+public class CriarPessoaCreditoRequestHandler : IRequestHandler<CriarPessoaCreditoRequest, Result<CriarPessoaCreditoResponse>>
 {
     public readonly IPessoaCreditoRepository _pessoaCreditoRepository;
-    public readonly ILogger<CriarPessoaCretidoRequestHandler> _logger;
+    public readonly ILogger<CriarPessoaCreditoRequestHandler> _logger;
     public readonly IExternalBankHistory _externalBankHistory;
     public readonly IUnitOfWork _unitOfWork;
 
-    public CriarPessoaCretidoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<CriarPessoaCretidoRequestHandler> logger, IExternalBankHistory externalBankHistory, IUnitOfWork unitOfWork)
+    public CriarPessoaCreditoRequestHandler(IPessoaCreditoRepository pessoaCreditoRepository, ILogger<CriarPessoaCreditoRequestHandler> logger, IExternalBankHistory externalBankHistory, IUnitOfWork unitOfWork)
     {
         _pessoaCreditoRepository = pessoaCreditoRepository;
         _logger = logger;
@@ -77,17 +77,17 @@ public class CriarPessoaCretidoRequestHandler : IRequestHandler<CriarPessoaCredi
                     balanco -= item.ValorTransacao;
             }
         }
-        if (balanco > 2000)
+        if (balanco >= 2000)
             return 60;
-        else if (balanco > 5000)
+        else if (balanco >= 5000)
             return 70;
-        else if (balanco > 10000)
+        else if (balanco >= 10000)
             return 80;
-        else if (balanco > 20000)
+        else if (balanco >= 20000)
             return 90;
-        else if (balanco > 50000)
+        else if (balanco >= 50000)
             return 100;
-        else if (balanco < 0)
+        else if (balanco <= 0)
             return 0;
         else
             return 50;

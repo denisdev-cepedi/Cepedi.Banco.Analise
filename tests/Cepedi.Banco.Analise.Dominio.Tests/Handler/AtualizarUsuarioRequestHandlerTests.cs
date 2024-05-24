@@ -1,4 +1,4 @@
-﻿namespace Cepedi.Banco.Analise.Dominio.Tests;
+﻿// namespace Cepedi.Banco.Analise.Dominio.Tests;
 
 //public class AtualizarUsuarioRequestHandlerTests
 //{
