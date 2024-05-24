@@ -9,7 +9,7 @@ namespace Cepedi.Banco.Analise.Api.Controllers;
 
 
 [ApiController]
-[Route("[controller]")]
+[Route("v1/[controller]")]
 public class PessoaCreditoController : BaseController
 {
     private readonly ILogger<PessoaCreditoController> _logger;
